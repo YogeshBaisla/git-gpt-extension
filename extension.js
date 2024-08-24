@@ -1,14 +1,17 @@
-import * as vscode from 'vscode';
+const vscode = require('vscode');
 
-export function activate(context: vscode.ExtensionContext) {
+/**
+ * @param {vscode.ExtensionContext} context
+ */
+function activate(context) {
   context.subscriptions.push(
     vscode.commands.registerCommand('extension.showChat', () => {
       const panel = vscode.window.createWebviewPanel(
-        'chatWebview',
-        'Git Command Generator',
-        vscode.ViewColumn.One,
+        'chatWebview', // Identifies the type of the webview. Used internally
+        'Git Command Generator', // Title of the panel displayed to the user
+        vscode.ViewColumn.One, // Editor column to show the new webview panel in
         {
-          enableScripts: true
+          enableScripts: true, // Enable scripts in the webview
         }
       );
 
@@ -17,6 +20,10 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
+/**
+ * Function to return the HTML content for the webview panel
+ * @returns {string}
+ */
 function getWebviewContent() {
   return `
     <!DOCTYPE html>
@@ -28,3 +35,13 @@ function getWebviewContent() {
     </html>
   `;
 }
+
+/**
+ * This method is called when your extension is deactivated
+ */
+function deactivate() {}
+
+module.exports = {
+  activate,
+  deactivate
+};
